@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import LeftPanel from "./leftPanel/LeftPanel";
 import RightPanel from "./rightPanel/RightPanel";
 import Grid from "@material-ui/core/Grid";
-
+import Player from "./player/Player";
+import PlayerClassComponent from "./player/PlayerClassComponent";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -43,12 +44,19 @@ class Dashboard extends Component {
       <div>
         <h5>Dashboard</h5>
         <Grid container>
-          <Grid item sm={5}>
+          <Grid item sm={4}>
             <LeftPanel x={this.something} onSubmit={this.handleSubmit} />
           </Grid>
 
-          <Grid item sm={7}>
+          <Grid item sm={4}>
             <RightPanel />
+          </Grid>
+
+          <Grid item sm={4}>
+            Viewer
+            <hr />
+            <Player />
+            {/*<PlayerClassComponent />*/}
           </Grid>
         </Grid>
       </div>

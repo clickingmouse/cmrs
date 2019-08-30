@@ -3,7 +3,7 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
-
+import WorkBench from "./WorkBench";
 const useStyles = makeStyles({
   list: {
     width: 250
@@ -22,6 +22,14 @@ function RightPanel() {
     bottom: false,
     right: false
   });
+  const trackObj = {
+    textType: "textType",
+    remix: "remixA",
+    caption: "a quic fox jump over the lazy dog",
+    media: "media",
+    mediaUrl: "mediaUrl",
+    captionPosition: "center"
+  };
 
   const toggleDrawer = (side, open) => event => {
     if (
@@ -57,6 +65,8 @@ function RightPanel() {
       >
         {fullList("top")}
       </SwipeableDrawer>
+      {/************************************************************** */}
+      <WorkBench track={trackObj} />
     </div>
   );
 }
