@@ -25,19 +25,14 @@ class LeftPanel extends Component {
     super(props);
     this.state = {
       textType: "",
-      remix: "",
+      music: "",
       caption: "",
       media: "",
-      mediaUrl: "",
       captionPosition: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleFile = this.handleFile.bind(this);
   }
-
   //console.log(props);
   //props.something();
 
@@ -45,53 +40,8 @@ class LeftPanel extends Component {
   //  return 1;
   //}
   handleSubmit() {}
-
-  handleFile(e) {
-    console.log(e.target.files[0]);
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      this.setState(
-        {
-          media: file,
-          mediaUrl: reader.result
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
-    };
-    reader.readAsDataURL(file);
-  }
-
-  handleSelect(e) {
-    e.preventDefault();
-    console.log(e.target.value);
-    this.setState(
-      {
-        remix: e.target.value
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
-    //    console.log(this.state);
-  }
-  handleClick(e) {
-    //console.log(e.currentTarget.value);
-    this.setState(
-      {
-        [e.currentTarget.id]: e.currentTarget.value
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
-    //console.log(this.state);
-  }
-
   handleChange(e) {
-    console.log(e.target.id);
+    console.log(e);
     this.setState({
       [e.target.id]: e.target.value
     });
@@ -116,45 +66,40 @@ class LeftPanel extends Component {
         <h2>Left Panel</h2>
         <Container>
           <form onSubmit={this.handleSubmit} noValidate>
+            <button>Text Style1</button>
             <Button
-              id="textType"
-              value="styleI"
+              onClick={this.handleChange}
               variant="contained"
               color="primary"
               className={"button1"}
-              onClick={this.handleClick}
             >
               Text Style I
             </Button>
-            <Button
-              id="textType"
-              value="styleII"
-              variant="contained"
-              color="primary"
-              className={"button2"}
-              onClick={this.handleClick}
-            >
+            <Button variant="contained" color="primary" className={"button2"}>
               Text Style II
             </Button>
             <br />
             <FormControl style={{ minWidth: "100%" }}>
               <InputLabel htmlFor="age-simple">Music</InputLabel>
               <Select
-                id="music"
                 autoWidth
-                value={this.state.remix}
-                onChange={this.handleSelect}
+                value="select sound"
+                onChange={this.handleChange}
+                inputProps={{
+                  name: "age",
+                  id: "age-simple"
+                }}
               >
-                <MenuItem id="item" style={{ width: "100vh" }} value={"remix1"}>
-                  Remix #1
+                <MenuItem style={{ width: "100vh" }} value={10}>
+                  Ten
                 </MenuItem>
-                <MenuItem value={"remix2"}>Remix #2</MenuItem>
-                <MenuItem value={"remix3"}>Remix #3</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
             <hr />
             <TextField
-              id="caption"
+              id="standard-textarea"
               label="With placeholder multiline"
               placeholder="Placeholder"
               fullWidth
@@ -164,21 +109,9 @@ class LeftPanel extends Component {
               rows="4"
               className="textArea"
               margin="normal"
-              value={this.state.caption}
-              onChange={this.handleChange}
             />
             <hr />
-            <input
-              accept="image/*, video/*"
-              className=""
-              id="media"
-              type="file"
-              onChange={this.handleFile}
-            />
-
-            <Button id="submit" variant="contained" color="secondary">
-              ADD
-            </Button>
+            <Button>add</Button>
           </form>
         </Container>
       </div>
