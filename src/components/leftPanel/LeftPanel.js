@@ -115,7 +115,15 @@ class LeftPanel extends Component {
       <div>
         <h2>Left Panel</h2>
         <Container>
-          <form onSubmit={this.handleSubmit} noValidate>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              console.log("add to work");
+              console.log(this.state);
+              this.props.onSubmit(this.state);
+            }}
+            noValidate
+          >
             <Button
               id="textType"
               value="styleI"
@@ -163,7 +171,6 @@ class LeftPanel extends Component {
               variant="outlined"
               rows="4"
               className="textArea"
-              margin="normal"
               value={this.state.caption}
               onChange={this.handleChange}
             />
@@ -175,8 +182,14 @@ class LeftPanel extends Component {
               type="file"
               onChange={this.handleFile}
             />
-
-            <Button id="submit" variant="contained" color="secondary">
+            <hr></hr>
+            <Button
+              className="btn"
+              id="submit"
+              type="submit"
+              variant="contained"
+              color="secondary"
+            >
               ADD
             </Button>
           </form>

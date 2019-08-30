@@ -7,17 +7,24 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInput: {
-        textType: "",
-        music: "",
-        caption: "",
-        media: "",
-        captionPosition: ""
-      }
+      input: []
     };
     // This binding is necessary to make `this` work in the callback
     this.something = this.something.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(newWork) {
+    console.log("inserting ...", newWork);
+    this.setState(
+      {
+        input: [...this.state.input, newWork]
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
   }
 
   handleChange = e => {
@@ -37,7 +44,7 @@ class Dashboard extends Component {
         <h5>Dashboard</h5>
         <Grid container>
           <Grid item sm={5}>
-            <LeftPanel x={this.something} />
+            <LeftPanel x={this.something} onSubmit={this.handleSubmit} />
           </Grid>
 
           <Grid item sm={7}>
