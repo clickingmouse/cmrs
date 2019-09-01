@@ -6,28 +6,21 @@ const urls = [clip1, clip2];
 function Player(props) {
   console.log("PlayerProps---->", props);
   const { play } = props;
-  if (play) {
-    console.log("play", typeof play);
-  } else {
-    console.log("=================empty");
-  }
+
   const playUrls = [];
   const playCaps = [];
   const playAudio = [];
   play.map(item => {
+    //console.log(">>>>>>>>>>>>", item);
     playUrls.push(item.mediaUrl);
-    playCaps.push(item.captions);
+    playCaps.push(item.caption);
     playAudio.push(item.remix);
   });
-  console.log("++++++++++>>>>", playUrls);
-  //urls[0] = props.play[0].mediaUrl;
-  //urls[1] = props.play[0].mediaUrl
-  //const urls[2]
-  console.log(playUrls);
 
   const [index, setIndex] = useState(0);
 
   function handleEnded(e) {
+    //track.removeCue(testCue);
     const nextUrlIdx = (index + 1) % urls.length;
 
     setIndex(nextUrlIdx);
@@ -36,66 +29,78 @@ function Player(props) {
     setTimeout(() => {
       var video = document.getElementById("video"),
         track;
-      var track = video.addTextTrack("subtitles", "just a test", "en");
+      var track = video.addTextTrack("captions", "just a test", "en");
       //make it visible
       track.mode = "showing";
+      //console.log("video length----=====>", video.duration);
+      const testCue = new VTTCue(0.5, video.duration - 2, playCaps[index]);
+      track.addCue(testCue);
 
-      // add some cues to show the text
-      track.addCue(new VTTCue(0.5, 5, "My first Cue"));
-      track.addCue(new VTTCue(5.1, 9.5, "My <u>underlined</u> Cue"));
-      track.addCue(
-        new VTTCue(9.6, 14.8, "My <c.small>small classname</c> Cue")
-      );
-      //track.addCue(new VTTCue(0, 12, "[Test]"));
+      //track.addCue(new VTTCue(0.5, video.duration, playCaps[index]));
+      //track.addCue(new TextTrackCue(0.5, video.duration, playCaps[index]));
+
+      console.log(video.textTracks);
+      //video.textTracks.onchange(() => {
+      //  console.log("cue finished xxxxxxxxxxxxxx");
+      //});
+      track.onCueChange = () => {
+        console.log("cue finished xxxxxxxxxxxxxx");
+      };
+      console.log(track.onCueChange());
+      console.log(track.textTracks);
+      //console.log(track.onCueChange);
+
+      const textTracks = video.textTracks[0];
+      var activeCue = textTracks.activeCues[0];
+      console.log(activeCue);
+      console.log("+++++++++++++++", video.textTracks);
+      console.log(textTracks);
+      var currentCue = track.activeCues[0];
+
+      //track.removeCue(testCue);
+
       console.log(video);
     }, 300);
-    setTimeout(() => {
-      var cue = new VTTCue(2, 15, "Cool text to be displayed");
-      let textTrackElem = document.getElementById("texttrack");
-      console.log(">>>>>>>>--->>>>>>>>", textTrackElem);
-    }, 500);
-    //textTrackElem[0].addCue(cue);
-    //textTrackElem.oncuechange = (event) => {
-    //  let cues = event.target.track.activeCues;
-    //});
-    setTimeout(() => {
-      const cue = new VTTCue(10, 15, "asdfghjkl");
-      //const tracks = document.querySelector(".video").textTracks;
-      //tracks[0].addCue(cue);
-    }, 500);
     ////////
-    var cue = new VTTCue(2, 15, "Cool text to be displayed");
-    //var tracks = document.querySelector("video").textTracks;
-    //tracks[0].addCue(cue);
   }
+  const preview =
+    play.length > 0 ? (
+      <div>
+        <p>preview on</p>
+        <h6>play stream</h6>
 
+        <video
+          id="video"
+          controls
+          muted
+          autoPlay
+          width="250"
+          preload="metadata"
+          onEnded={handleEnded}
+          src={playUrls[index]}
+        >
+          <track
+            id="track"
+            src={someCaption}
+            default
+            label="English"
+            kind="captions"
+            srclang="en"
+            onCueChange={() => {
+              console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            }}
+          />
+        </video>
+        {addCaption()}
+      </div>
+    ) : (
+      <h6>preview off</h6>
+    );
   return (
     <div>
       <h3>Player</h3>
-      {play &&
-        play.map(item => {
-          return <div>play stream</div>;
-        })}
-      <video
-        id="video"
-        controls
-        muted
-        autoPlay
-        width="250"
-        preload="metadata"
-        onEnded={handleEnded}
-        src={urls[index]}
-      >
-        <track
-          id="track"
-          src={someCaption}
-          default
-          label="English"
-          kind="captions"
-          srclang="en"
-        />
-      </video>
-      {addCaption()}
+      {play.length}
+      {preview}
     </div>
   );
 }

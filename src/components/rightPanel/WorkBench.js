@@ -35,7 +35,7 @@ const WorkBench = props => {
               </Grid>
               <Grid item xs={10}>
                 <Preload source={item.mediaUrl} />
-                <CaptionEditor text="123321123456723443245678910" />
+                <CaptionEditor text={item.caption} />
               </Grid>
               <Grid item xs={1}>
                 <h5>Caption Position</h5>
