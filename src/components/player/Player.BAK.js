@@ -12,12 +12,8 @@ function Player(props) {
     console.log("=================empty");
   }
   const playUrls = [];
-  const playCaps = [];
-  const playAudio = [];
   play.map(item => {
     playUrls.push(item.mediaUrl);
-    playCaps.push(item.captions);
-    playAudio.push(item.remix);
   });
   console.log("++++++++++>>>>", playUrls);
   //urls[0] = props.play[0].mediaUrl;

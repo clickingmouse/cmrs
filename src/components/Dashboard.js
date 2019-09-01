@@ -8,22 +8,30 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: []
+      stream: [],
+      play: []
     };
     // This binding is necessary to make `this` work in the callback
     this.something = this.something.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
-
+  handlePlay() {
+    console.log("playing");
+    this.setState({ play: [...this.state.stream] });
+  }
   handleSubmit(newWork) {
     console.log("inserting ...", newWork);
+
     this.setState(
       {
-        input: [...this.state.input, newWork]
+        stream: [...this.state.stream, newWork]
       },
       () => {
+        console.log("added to stream");
         console.log(this.state);
+        console.log(typeof this.state.stream);
       }
     );
   }
@@ -49,13 +57,13 @@ class Dashboard extends Component {
           </Grid>
 
           <Grid item sm={4}>
-            <RightPanel />
+            <RightPanel stream={this.state.stream} onPlay={this.handlePlay} />
           </Grid>
 
           <Grid item sm={4}>
             Viewer
             <hr />
-            <Player />
+            <Player play={this.state.play} />
             {/*<PlayerClassComponent />*/}
           </Grid>
         </Grid>
