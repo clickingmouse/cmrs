@@ -4,6 +4,7 @@ import RightPanel from "./rightPanel/RightPanel";
 import Grid from "@material-ui/core/Grid";
 import Player from "./player/Player";
 import PlayerClassComponent from "./player/PlayerClassComponent";
+import LeftFnPanel from "./leftPanel/LeftFnPanel";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +55,7 @@ class Dashboard extends Component {
         <Grid container>
           <Grid item sm={4}>
             <LeftPanel x={this.something} onSubmit={this.handleSubmit} />
+            <LeftFnPanel onSubmit={this.handleSubmit} />
           </Grid>
 
           <Grid item sm={4}>
