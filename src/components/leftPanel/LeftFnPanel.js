@@ -47,8 +47,8 @@ const LeftFnPanel = props => {
 
   return (
     <div>
-      <h6>Left Functional Component</h6>
       <Container>
+        <h6>Left Fn Component</h6>
         <form
           onSubmit={e => {
             e.preventDefault();
@@ -71,7 +71,7 @@ const LeftFnPanel = props => {
         >
           <TextField
             id="caption"
-            label="With placeholder multiline"
+            label="Type Caption here"
             placeholder="Placeholder"
             fullWidth
             multiline

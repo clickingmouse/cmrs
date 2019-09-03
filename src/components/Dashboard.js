@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Player from "./player/Player";
 import PlayerClassComponent from "./player/PlayerClassComponent";
 import LeftFnPanel from "./leftPanel/LeftFnPanel";
+import RightFnPanel from "./rightPanel/RightFnPanel";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -53,16 +54,19 @@ class Dashboard extends Component {
       <div>
         <h5>Dashboard</h5>
         <Grid container>
-          <Grid item sm={4}>
-            <LeftPanel x={this.something} onSubmit={this.handleSubmit} />
+          <Grid item sm={2}>
+            {/*<LeftPanel x={this.something} onSubmit={this.handleSubmit} />*/}
             <LeftFnPanel onSubmit={this.handleSubmit} />
           </Grid>
 
-          <Grid item sm={4}>
+          <Grid item sm={5}>
+            <RightFnPanel stream={this.state.stream} onPlay={this.handlePlay} />
+            {/*
             <RightPanel stream={this.state.stream} onPlay={this.handlePlay} />
+            */}
           </Grid>
 
-          <Grid item sm={4}>
+          <Grid item sm={5}>
             Viewer
             <hr />
             <Player play={this.state.play} />
