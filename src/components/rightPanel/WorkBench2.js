@@ -16,22 +16,25 @@ export default function WorkBench2(props) {
       {stream &&
         stream.map((item, index) => {
           return (
-            <Grid container key={index}>
-              <Typography>clip - {index + 1} -</Typography>
-              <Divider />
+            <div>
+              <Grid container key={index}>
+                <Typography>clip - {index + 1} -</Typography>
+                <Divider />
 
-              <Grid item xs={12}>
-                <Preload source={item.mediaUrl} />
-                <CaptionEditor text={item.caption} />
-                <Typography>Caption Position</Typography>
-                <Button>TOP</Button>
+                <Grid item xs={12}>
+                  <Preload source={item.mediaUrl} />
+                  <CaptionEditor text={item.caption} />
+                  {/**<Typography>Caption Position</Typography>
+                                 <Button>TOP</Button>
                 <Button>LEFT</Button>
                 <Button>RIGHT</Button>
                 <Button>BOTTOM</Button>
-                <Button>Timer</Button>
-                <Button>DEL</Button>
+                <Button>Timer</Button>*/}
+                  <Button>DEL</Button>
+                </Grid>
               </Grid>
-            </Grid>
+              <hr />
+            </div>
           );
         })}
     </div>

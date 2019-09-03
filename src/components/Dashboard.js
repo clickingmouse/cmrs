@@ -3,6 +3,7 @@ import LeftPanel from "./leftPanel/LeftPanel";
 import RightPanel from "./rightPanel/RightPanel";
 import Grid from "@material-ui/core/Grid";
 import Player from "./player/Player";
+import Player2 from "./player/Player2";
 import PlayerClassComponent from "./player/PlayerClassComponent";
 import LeftFnPanel from "./leftPanel/LeftFnPanel";
 import RightFnPanel from "./rightPanel/RightFnPanel";
@@ -69,7 +70,10 @@ class Dashboard extends Component {
           <Grid item sm={5}>
             Viewer
             <hr />
+            {/**
             <Player play={this.state.play} />
+             */}
+            <Player2 play={this.state.play} />
             {/*<PlayerClassComponent />*/}
           </Grid>
         </Grid>

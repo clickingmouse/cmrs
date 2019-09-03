@@ -7,7 +7,7 @@ const CaptionEditor = props => {
     <div>
       <Container>
         <Card style={{ textAlign: "center" }}>
-          <CardHeader title="caption"></CardHeader>
+          <CardHeader title="-caption-"></CardHeader>
           {props.text}
         </Card>
       </Container>
