@@ -4,8 +4,9 @@ import someCaption from "./blank.vtt";
 export default function Player2(props) {
   console.log("PlayerProps---->", props);
   const [index, setIndex] = useState(0);
-
+  const [CurrentCue, setCue] = useState({});
   const { play } = props;
+  var testCue = {};
 
   const playUrls = [];
   const playCaps = [];
@@ -18,42 +19,80 @@ export default function Player2(props) {
   });
 
   function handleEnded(e) {
+    const z = e.target;
+    console.log("video ended", testCue);
     //track.removeCue(testCue);
+    var currentTrack = z.textTracks[0];
+    var activeCue = currentTrack.activeCues[0];
+    console.log("activeCue ", activeCue);
+    console.log(currentTrack);
+    currentTrack.removeCue(testCue);
     const nextUrlIdx = (index + 1) % playUrls.length;
 
     setIndex(nextUrlIdx);
   }
+  function handleCueChange() {
+    console.log("xxxxxxxxxxxxxxxzzzzzzzzzz");
+  }
+
+  function handleLoadedData() {
+    console.log("video loaded, adding caption...");
+    var video = document.getElementById("video"),
+      track;
+    var track = video.addTextTrack("captions", "just a test", "en");
+
+    //make it visible
+    track.mode = "showing";
+    //console.log(video.TextTrack);
+    testCue = new VTTCue(0.5, video.duration - 2, playCaps[index]);
+    //setCue(testCue);
+
+    track.addCue(testCue);
+    console.log(video.textTracks);
+    var y = video.textTracks[0];
+    var activeCue = y.activeCues[0];
+    console.log(video.textTracks);
+    console.log(y);
+    track.onCueChange = function() {
+      console.log("cue finished, changing xxxxxxxxxxxxxx");
+    };
+  }
 
   function addCaption() {
     setTimeout(() => {
+      console.log("======================================");
       var video = document.getElementById("video"),
         track;
-      var track = video.addTextTrack("captions", "just a test", "en");
-      //make it visible
-      track.mode = "showing";
-      //console.log("video length----=====>", video.duration);
-      const testCue = new VTTCue(0.5, video.duration - 2, playCaps[index]);
-      track.addCue(testCue);
+      video.onloadeddata = function() {
+        alert("Browser has loaded the current frame");
+        var track = video.addTextTrack("captions", "just a test", "en");
+        //make it visible
+        track.mode = "showing";
+        console.log(video);
+        console.log("video length----=====>", video.duration);
+        testCue = new VTTCue(0.5, video.duration - 2, playCaps[index]);
+        //setCue(testCue);
+        track.addCue(testCue);
 
-      console.log(video.textTracks);
-      track.onCueChange = () => {
-        console.log("cue finished xxxxxxxxxxxxxx");
+        console.log(video.textTracks);
+        track.onCueChange = () => {
+          console.log("cue finished xxxxxxxxxxxxxx");
+        };
+        console.log(track.onCueChange());
+        console.log(track.textTracks);
+        //console.log(track.onCueChange);
+
+        const textTracks = video.textTracks[0];
+        var activeCue = textTracks.activeCues[0];
+        console.log(activeCue);
+        console.log("+++++++++++++++", video.textTracks);
+        console.log(textTracks);
+        var currentCue = track.activeCues[0];
+        console.log(video);
       };
-      console.log(track.onCueChange());
-      console.log(track.textTracks);
-      //console.log(track.onCueChange);
-
-      const textTracks = video.textTracks[0];
-      var activeCue = textTracks.activeCues[0];
-      console.log(activeCue);
-      console.log("+++++++++++++++", video.textTracks);
-      console.log(textTracks);
-      var currentCue = track.activeCues[0];
 
       //track.removeCue(testCue);
-
-      console.log(video);
-    }, 300);
+    }, 1000);
     ////////
   }
 
@@ -69,23 +108,12 @@ export default function Player2(props) {
           muted
           autoPlay
           width="250"
-          preload="metadata"
+          preload="auto"
           onEnded={handleEnded}
+          onLoadedData={handleLoadedData}
           src={playUrls[index]}
-        >
-          <track
-            id="track"
-            src={someCaption}
-            default
-            label="English"
-            kind="captions"
-            srclang="en"
-            onCueChange={() => {
-              console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            }}
-          />
-        </video>
-        {addCaption()}
+        ></video>
+        {/*addCaption()*/}
       </div>
     ) : (
       <h6>preview off</h6>
