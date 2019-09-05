@@ -39,10 +39,11 @@ export default function Player2(props) {
     console.log("video loaded, adding caption...");
     var video = document.getElementById("video"),
       track;
-    var track = video.addTextTrack("captions", "just a test", "en");
-
+    //var track = video.addTextTrack("captions", "just a test", "en");
+    console.log(video.textTracks);
+    track = video.textTracks[0];
     //make it visible
-    track.mode = "showing";
+    //track.mode = "showing";
     //console.log(video.TextTrack);
     testCue = new VTTCue(0.5, video.duration - 2, playCaps[index]);
     //setCue(testCue);
@@ -112,7 +113,18 @@ export default function Player2(props) {
           onEnded={handleEnded}
           onLoadedData={handleLoadedData}
           src={playUrls[index]}
-        ></video>
+        >
+          <track
+            id="track"
+            default
+            label="English"
+            kind="captions"
+            srclang="en"
+            onCueChange={() => {
+              console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            }}
+          />
+        </video>
         {/*addCaption()*/}
       </div>
     ) : (
